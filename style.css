@@ -1,3 +1,67 @@
+/* =========================================================================
+   1. TOKENS DE DISEÑO Y TEMAS
+   ========================================================================= */
+:root {
+    --color-primario: #124569;
+    --color-texto-boton: #ffffff;
+    --color-cabecera: #0c2c5d;
+    --color-texto: #1f2937;
+    --color-texto-suave: #6b7280;
+    --color-fondo: #f3f5f2;
+    --color-superficie: #ffffff;
+    --color-borde: #e2e6e0;
+
+    --color-exito: #15803d;
+    --fondo-exito: #dcfce7;
+    --color-error: #b91c1c;
+    --fondo-error: #fee2e2;
+
+    --espaciado-base: 16px;
+    --radio: 12px;
+    --sombra: 0 4px 14px rgba(15, 23, 42, 0.08);
+}
+
+.tema-oscuro {
+    --color-primario: #1d5aaa;
+    --color-texto-boton: #052e16;
+    --color-cabecera: #969ddf;
+    --color-texto: #e5e7eb;
+    --color-texto-suave: #9ca3af;
+    --color-fondo: #0f172a;
+    --color-superficie: #1e293b;
+    --color-borde: #334155;
+
+    --color-exito: #270f55;
+    --fondo-exito: #292875;
+    --color-error: #fca5a5;
+    --fondo-error: #4c1d1d;
+    --color-info: #93c5fd;
+    --fondo-info: #1e3a8a;
+
+    --sombra: 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+/* =========================================================================
+   2. ESTILOS BASE
+   ========================================================================= */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color: var(--color-texto);
+    background-color: var(--color-fondo);
+    margin: 0;
+    min-height: 100dvh;
+}
+
+h1, h2, h3 { margin: 0; line-height: 1.3; }
+p { margin: 0; }
+
+/* =========================================================================
+   3. NAVEGACIÓN Y CABECERA
+   ========================================================================= */
 .navegacion-principal {
     background-color: var(--color-superficie);
     padding: var(--espaciado-base) calc(var(--espaciado-base) * 1.5);
@@ -15,7 +79,188 @@
     text-decoration: underline;
 }
 
-/* Estilos del contenedor y tabla del historial */
+.cabecera {
+    background-color: var(--color-cabecera);
+    color: #ffffff;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--espaciado-base);
+    padding: calc(var(--espaciado-base) * 0.75) calc(var(--espaciado-base) * 1.5);
+}
+
+.zona-marca {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--espaciado-base) * 0.75);
+}
+
+.cabecera h1 { font-size: calc(var(--espaciado-base) * 1.5); letter-spacing: -0.5px; }
+.subtitulo { font-size: calc(var(--espaciado-base) * 0.8); opacity: 0.85; }
+
+.zona-acciones {
+    display: flex;
+    align-items: center;
+    gap: var(--espaciado-base);
+}
+
+#contador-carrito { font-weight: bold; font-size: calc(var(--espaciado-base) * 1.1); }
+
+/* =========================================================================
+   4. ESTRUCTURA PRINCIPAL (CATÁLOGO Y CARRITO)
+   ========================================================================= */
+.contenedor-principal {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: calc(var(--espaciado-base) * 1.25);
+    padding: calc(var(--espaciado-base) * 1.25);
+}
+
+.columna-catalogo {
+    flex: 3 1 340px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaciado-base);
+}
+
+.panel-carrito {
+    flex: 1 1 300px;
+    background-color: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+    box-shadow: var(--sombra);
+    padding: calc(var(--espaciado-base) * 1.25);
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaciado-base);
+}
+
+/* =========================================================================
+   5. CATÁLOGO Y TARJETAS DE PRODUCTOS
+   ========================================================================= */
+.grid-productos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espaciado-base);
+}
+
+.tarjeta {
+    flex: 1 1 160px;
+    background-color: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+    box-shadow: var(--sombra);
+    padding: var(--espaciado-base);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--espaciado-base) * 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tarjeta:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.tarjeta.agotada { --color-primario: var(--color-texto-suave); opacity: 0.75; }
+.tarjeta.poco-stock { --color-estado: var(--color-error); border-color: var(--color-error); }
+
+.nombre-producto { font-size: calc(var(--espaciado-base) * 1.05); }
+.etiqueta-categoria {
+    align-self: center;
+    font-size: calc(var(--espaciado-base) * 0.7);
+    text-transform: uppercase;
+    color: var(--color-texto-suave);
+    border: 1px solid var(--color-borde);
+    border-radius: calc(var(--radio) * 2);
+    padding: 2px 10px;
+}
+.precio-producto { font-size: calc(var(--espaciado-base) * 1.4); font-weight: bold; color: var(--color-primario); }
+.estado-stock { font-size: calc(var(--espaciado-base) * 0.8); color: var(--color-estado, var(--color-texto-suave)); }
+
+/* =========================================================================
+   6. BOTONES
+   ========================================================================= */
+.boton {
+    font-family: inherit;
+    font-size: calc(var(--espaciado-base) * 0.9);
+    background-color: var(--color-primario);
+    color: var(--color-texto-boton);
+    border: none;
+    border-radius: calc(var(--radio) / 2);
+    padding: calc(var(--espaciado-base) * 0.6) var(--espaciado-base);
+    cursor: pointer;
+}
+
+.boton-bloque { width: 100%; margin-top: 10px; }
+.boton:disabled { background-color: var(--color-borde); color: var(--color-texto-suave); cursor: not-allowed; }
+
+/* =========================================================================
+   7. LISTA DEL CARRITO Y RESUMEN
+   ========================================================================= */
+.lista-carrito {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--espaciado-base) * 0.5);
+    max-height: calc(100svh / 3);
+    overflow-y: auto;
+}
+
+.linea-carrito {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: calc(var(--espaciado-base) * 0.5);
+    border-bottom: 1px solid var(--color-borde);
+    padding-bottom: calc(var(--espaciado-base) * 0.5);
+}
+
+.nombre-linea { font-size: calc(var(--espaciado-base) * 0.95); font-weight: bold; }
+.detalle-linea { font-size: calc(var(--espaciado-base) * 0.8); color: var(--color-texto-suave); }
+
+.controles-linea { display: flex; align-items: center; gap: calc(var(--espaciado-base) * 0.25); }
+
+.boton-mini {
+    font-size: calc(var(--espaciado-base) * 0.85);
+    width: calc(var(--espaciado-base) * 1.75);
+    height: calc(var(--espaciado-base) * 1.75);
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    border: 1px solid var(--color-borde);
+    border-radius: calc(var(--radio) / 2);
+    cursor: pointer;
+}
+.boton-quitar { color: var(--color-error); }
+
+.resumen {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--espaciado-base) * 0.35);
+    border-top: 1px solid var(--color-borde);
+    padding-top: var(--espaciado-base);
+}
+
+.linea-resumen {
+    display: flex;
+    justify-content: space-between;
+    font-size: calc(var(--espaciado-base) * 0.9);
+    color: var(--color-texto-suave);
+}
+
+.linea-total {
+    font-size: calc(var(--espaciado-base) * 1.2);
+    font-weight: bold;
+    color: var(--color-texto);
+    border-top: 1px solid var(--color-borde);
+    padding-top: calc(var(--espaciado-base) * 0.5);
+}
+
+/* =========================================================================
+   8. HISTORIAL DE TRANSACCIONES 
+   ========================================================================= */
 .contenedor-historial {
     padding: var(--espaciado-base) calc(var(--espaciado-base) * 1.5);
     margin-bottom: calc(var(--espaciado-base) * 2);
@@ -49,11 +294,31 @@
     font-weight: bold;
 }
 
-.tabla-historial tr:last-child td {
-    border-bottom: none;
+.tabla-historial tr:last-child td { border-bottom: none; }
+.tema-oscuro .tabla-historial tr:hover { background-color: var(--color-fondo); }
+
+/* =========================================================================
+   9. MENSAJES Y UTILIDADES
+   ========================================================================= */
+.mensaje {
+    font-size: calc(var(--espaciado-base) * 0.85);
+    font-weight: bold;
+    color: var(--color-estado, var(--color-texto));
+    background-color: var(--fondo-estado, var(--color-superficie));
+    border-left: 4px solid var(--color-estado, var(--color-borde));
+    border-radius: calc(var(--radio) / 3);
+    padding: calc(var(--espaciado-base) * 0.6);
+    margin-top: 10px;
 }
 
-/* Soporte para el tema oscuro en las filas */
-.tema-oscuro .tabla-historial tr:hover {
-    background-color: var(--color-fondo);
+.mensaje-exito { --color-estado: var(--color-exito); --fondo-estado: var(--fondo-exito); }
+.mensaje-error { --color-estado: var(--color-error); --fondo-estado: var(--fondo-error); }
+.oculto { display: none; }
+
+.pie {
+    text-align: center;
+    color: #ffffff;
+    font-size: calc(var(--espaciado-base) * 0.8);
+    padding: var(--espaciado-base);
+    background-color: #161971;
 }

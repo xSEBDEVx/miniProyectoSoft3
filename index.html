@@ -10,19 +10,16 @@
 
 <body>
 
-    <!-- REQUERIMIENTO 1: Integración bidireccional -->
     <nav class="navegacion-principal">
         <a href="hoja_de_vida.html" class="enlace-nav">← Volver a mi Hoja de Vida</a>
     </nav>
-
-    <!-- CABECERA -->
     <header class="cabecera">
         <div class="zona-marca">
             <span class="logo">
-                <img src="images/carrito.png" alt="Logo de la frutería" width="50" height="50">
+                <img src="images/carrito.png" alt="Logo" width="50" height="50" style="object-fit: contain;">
             </span>
             <div>
-                <h1>Frutería Web</h1>
+                <h1>Frutería Unicauca</h1>
                 <p class="subtitulo">Proyecto integrador: CSS moderno + JavaScript</p>
             </div>
         </div>
@@ -39,9 +36,10 @@
         Sin conexión a internet. Puedes seguir navegando, pero no podrás confirmar el pedido.
     </p>
 
-    <!-- CONTENIDO PRINCIPAL -->
+    <!-- Contenedor maestro que activa Flexbox para dividir Catálogo (izq) y Carrito (der) -->
     <main class="contenedor-principal">
 
+        <!-- COLUMNA IZQUIERDA: Catálogo en cuadrícula -->
         <section class="columna-catalogo">
             <div class="barra-filtros">
                 <h2>Catálogo</h2>
@@ -55,9 +53,12 @@
                     </select>
                 </div>
             </div>
+            
+            <!-- Aquí JavaScript inyecta los productos horizontalmente gracias a la clase 'grid-productos' -->
             <div id="lista-productos" class="grid-productos"></div>
         </section>
 
+        <!-- COLUMNA DERECHA: Panel lateral del carrito -->
         <aside class="panel-carrito">
             <h2>Tu carrito</h2>
             <div id="items-carrito" class="lista-carrito"></div>
@@ -90,7 +91,6 @@
                 </p>
             </div>
 
-            <!-- REQUERIMIENTO 2: El evento form bloquea el submit por defecto en JS -->
             <form id="form-compra" class="form-compra">
                 <h3>Finalizar compra</h3>
                 <label for="input-nombre" style="font-size: 15px; display: block; margin: 5px;">Nombre completo:
@@ -108,7 +108,7 @@
 
     </main>
 
-    <!-- REQUERIMIENTO 3: Estructuración semántica de datos al final de la página -->
+    <!-- ZONA INFERIOR: Historial de transacciones tabulado -->
     <section class="contenedor-historial">
         <h2>Historial de Transacciones de la Sesión</h2>
         <table class="tabla-historial">
@@ -120,7 +120,6 @@
                 </tr>
             </thead>
             <tbody id="cuerpo-historial">
-                <!-- Las filas dinámicas se insertan aquí -->
             </tbody>
         </table>
     </section>
