@@ -1,16 +1,19 @@
 /* =========================================================================
-   1. VARIABLES Y TIPOS DE DATOS (Base de datos simulada)
+   1. VARIABLES Y TIPOS DE DATOS 
    ========================================================================= */
-const manzana   = { id: 1, nombre: "manzana", categoria: "fruta",   precio: 20.5,  stock: 8,  icono: "images/manzana.jpg" };
-const pina      = { id: 2, nombre: "pina",        categoria: "fruta",   precio: 15.35, stock: 5,  icono: "images/pina.jpg" };
-const pera      = { id: 3, nombre: "pera",        categoria: "fruta",   precio: 5.45,  stock: 12, icono: "images/pera.jpg" };
-const melon     = { id: 4, nombre: "melon",       categoria: "fruta",   precio: 6.15,  stock: 3,  icono: "images/melon.jpg" };
-const zanahoria = { id: 5, nombre: "zanahoria",   categoria: "verdura", precio: 3.2,   stock: 14, icono: "images/zanahoria.jpg" };
-const tomate    = { id: 6, nombre: "tomate",      categoria: "verdura", precio: 4.75,  stock: 0,  icono: "images/tomate.jpg" };
-const jugo      = { id: 7, nombre: "jugo",        categoria: "bebida",  precio: 12.0,  stock: 6,  icono: "images/jugo.jpg" };
-const cocoAgua  = { id: 8, nombre: "aguaCoco",    categoria: "bebida",  precio: 8.9,   stock: 4,  icono: "images/aguaCoco.jpg" };
-
-const inventarioProductos = [manzana, pina, pera, melon, zanahoria, tomate, jugo, cocoAgua];
+const manzana   = { id: 1, nombre: "manzana", categoria: "fruta",   precio: 1000,  stock: 8,  icono: "images/manzana.jpg" };
+const pina      = { id: 2, nombre: "pina",        categoria: "fruta",   precio: 2000, stock: 5,  icono: "images/pina.jpg" };
+const pera      = { id: 3, nombre: "pera",        categoria: "fruta",   precio: 1200,  stock: 12, icono: "images/pera.jpg" };
+const melon     = { id: 4, nombre: "melon",       categoria: "fruta",   precio: 3000,  stock: 3,  icono: "images/melon.jpg" };
+const zanahoria = { id: 5, nombre: "zanahoria",   categoria: "verdura", precio: 500,   stock: 14, icono: "images/zanahoria.jpg" };
+const tomate    = { id: 6, nombre: "tomate",      categoria: "verdura", precio: 400,  stock: 0,  icono: "images/tomate.jpg" };
+const jugo      = { id: 7, nombre: "jugo",        categoria: "bebida",  precio: 1300,  stock: 6,  icono: "images/jugo.jpg" };
+const cocoAgua  = { id: 8, nombre: "aguaCoco",    categoria: "bebida",  precio: 5000,   stock: 4,  icono: "images/aguaCoco.jpg" };
+const agua     = { id: 9, nombre: "agua",        categoria: "bebida",  precio: 1200,   stock: 10, icono: "images/agua.jpg" };
+const brocoli   = { id: 10, nombre: "brocoli",     categoria: "verdura", precio: 2300,   stock: 7,  icono: "images/brocoli.jpg" };
+const fresa     = { id: 11, nombre: "fresa",       categoria: "fruta",   precio: 1900,  stock: 9,  icono: "images/fresa.jpg" };
+const lechuga   = { id: 12, nombre: "lechuga",     categoria: "verdura", precio: 1400,   stock: 11, icono: "images/lechuga.jpg" };
+const inventarioProductos = [manzana, pina, pera, melon, zanahoria, tomate, jugo, cocoAgua, agua, brocoli, fresa, lechuga];
 
 const COSTO_ENVIO = 8;
 const MINIMO_ENVIO_GRATIS = 60;
@@ -96,7 +99,7 @@ function renderizarResumen() {
    4. DIBUJAR EL CATÁLOGO (Imágenes y Botones Interactivos)
    ========================================================================= */
 function renderizarProductos() {
-    contenedorProductos.innerHTML = ""; // Limpiar catálogo
+    contenedorProductos.innerHTML = ""; 
 
     inventarioProductos.forEach((producto) => {
         const coincideFiltro = (categoriaActual === "todos" || producto.categoria === categoriaActual);
@@ -119,7 +122,6 @@ function renderizarProductos() {
             const itemEnCarrito = buscarItemEnCarrito(producto.id);
             const textoEnCarrito = (itemEnCarrito === null) ? "" : `En carrito: ${itemEnCarrito.cantidad}`;
 
-            // Inyección segura de la imagen (Asegúrate de tener las imágenes descargadas)
             tarjeta.innerHTML = `
                 <span class="icono-producto">
                     <!-- Truco: Si no encuentra la imagen, muestra un color gris -->
@@ -131,7 +133,6 @@ function renderizarProductos() {
                 <p class="estado-stock">${textoStock}</p>
                 <p class="mini-dato" style="font-weight: bold;">${textoEnCarrito}</p>
             `;
-
             const botonComprar = document.createElement("button");
             botonComprar.classList.add("boton", "boton-bloque");
 
@@ -140,10 +141,8 @@ function renderizarProductos() {
                 botonComprar.disabled = true;
             } else {
                 botonComprar.textContent = "Agregar al carrito";
-                // Interactividad: Evento click del botón
                 botonComprar.addEventListener("click", () => agregarAlCarrito(producto.id));
             }
-
             tarjeta.appendChild(botonComprar);
             contenedorProductos.appendChild(tarjeta);
         }
@@ -282,7 +281,7 @@ function mostrarMensaje(texto, tipo) {
 }
 
 /* =========================================================================
-   8. EVENTOS Y TABLA DE HISTORIAL (PROYECTO 2)
+   8. EVENTOS Y TABLA DE HISTORIAL REQUERIMIENTO 4 Y 5
    ========================================================================= */
 const aplicarCupon = function () {
     const codigo = inputDescuento.value.toUpperCase();
@@ -341,7 +340,7 @@ btnTema.addEventListener("click", () => {
     }
 });
 
-// HISTORIAL DE COMPRAS (PROYECTO 2)
+// HISTORIAL DE COMPRAS REQUERIMIENTO 4
 const manejarCompra = function (evento) {
     evento.preventDefault(); 
 
@@ -352,18 +351,14 @@ const manejarCompra = function (evento) {
 
     const nombreCliente = inputNombre.value;
     const correoCliente = inputCorreo.value;
-
+//CONTROL DE FORMULARIO REQUERIMIENTO 3
     if (nombreCliente.length < 3) {
         mostrarMensaje("Escribe tu nombre completo", "error");
         return;
     }
-
     const totales = calcularTotales();
     numeroPedido++;
-
-    // Llama a la función que crea la fila en la tabla inferior
     agregarRegistroHistorial(numeroPedido, nombreCliente, correoCliente, totales);
-
     carrito = [];
     porcentajeDescuento = 0;
     envioGratisPorCupon = false;
@@ -376,7 +371,7 @@ const manejarCompra = function (evento) {
 };
 
 formCompra.addEventListener("submit", manejarCompra);
-
+//REQUERIMIENTO 5: Inyección de filas
 function agregarRegistroHistorial(pedido, nombreCliente, correoCliente, totales) {
     const fila = document.createElement("tr");
 
@@ -393,15 +388,12 @@ function agregarRegistroHistorial(pedido, nombreCliente, correoCliente, totales)
     celdaTotal.style.fontWeight = "bold"; 
     celdaTotal.style.color = "var(--color-primario)";
     fila.appendChild(celdaTotal);
-
-    // Se inyecta la fila en el contenedor <tbody>
     cuerpoHistorial.appendChild(fila);
 }
 
 (function iniciarTienda() {
     console.log("Iniciando la tienda...");
     actualizarPantalla();
-
     window.addEventListener("offline", () => avisoConexion.classList.remove("oculto"));
     window.addEventListener("online", () => {
         avisoConexion.classList.add("oculto");
