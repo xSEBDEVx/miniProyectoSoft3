@@ -1,61 +1,7 @@
 /* =========================================================================
-   TIENDA DE PRODUCTOS - VERSIÓN 1: CATÁLOGO DINÁMICO
-   Temas aplicados: variables y tipos de datos, arrays de objetos,
-   ciclo for, condicionales, operador ternario, funciones, DOM y eventos.
+   2. SELECCIÓN DE ELEMENTOS DEL DOM (Actualizado)
    ========================================================================= */
-
-
-/* =========================================================================
-   1. VARIABLES Y TIPOS DE DATOS (representa la "base de datos" simulada)
-   ========================================================================= */
-const manzana   = { id: 1, nombre: "manzana", categoria: "fruta",   precio: 20.5,  stock: 8,  icono: "images/manzana.jpg" };
-const pina      = { id: 2, nombre: "pina",         categoria: "fruta",   precio: 15.35, stock: 5,  icono: "images/pina.jpg" };
-const pera      = { id: 3, nombre: "pera",         categoria: "fruta",   precio: 5.45,  stock: 12, icono: "images/pera.jpg" };
-const melon     = { id: 4, nombre: "melon",        categoria: "fruta",   precio: 6.15,  stock: 3,  icono: "images/melon.jpg" };
-const zanahoria = { id: 5, nombre: "zanahoria",    categoria: "verdura", precio: 3.2,   stock: 14, icono: "images/zanahoria.jpg" };
-const tomate    = { id: 6, nombre: "tomate",       categoria: "verdura", precio: 4.75,  stock: 0,  icono: "images/tomate.jpg" };
-const jugo      = { id: 7, nombre: "jugo", categoria: "bebida",  precio: 12.0,  stock: 6,  icono: "images/jugo.jpg" };
-const cocoAgua  = { id: 8, nombre: "aguaCoco", categoria: "bebida",  precio: 8.9,   stock: 4,  icono: "images/aguaCoco.jpg" };
-const platano   = { id: 9,  nombre: "plátano",     categoria: "fruta",   precio: 18.0,  stock: 20, icono: "images/platano.jpg" };
-const uva       = { id: 10, nombre: "uva",         categoria: "fruta",   precio: 35.5,  stock: 15, icono: "images/uva.jpg" };
-const sandia    = { id: 11, nombre: "sandía",      categoria: "fruta",   precio: 25.0,  stock: 7,  icono: "images/sandia.jpg" };
-const mango     = { id: 12, nombre: "mango",       categoria: "fruta",   precio: 22.3,  stock: 10, icono: "images/mango.jpg" };
-const fresa     = { id: 13, nombre: "fresa",       categoria: "fruta",   precio: 45.0,  stock: 0,  icono: "images/fresa.jpg" };
-const lechuga   = { id: 14, nombre: "lechuga",     categoria: "verdura", precio: 12.5,  stock: 18, icono: "images/lechuga.jpg" };
-const cebolla   = { id: 15, nombre: "cebolla",     categoria: "verdura", precio: 9.8,   stock: 30, icono: "images/cebolla.jpg" };
-const pepino    = { id: 16, nombre: "pepino",      categoria: "verdura", precio: 14.2,  stock: 2,  icono: "images/pepino.jpg" };
-const brocoli   = { id: 17, nombre: "brócoli",     categoria: "verdura", precio: 19.9,  stock: 12, icono: "images/brocoli.jpg" };
-const limonada  = { id: 18, nombre: "limonada",    categoria: "bebida",  precio: 15.0,  stock: 20, icono: "images/limonada.jpg" };
-const teHelado  = { id: 19, nombre: "té helado",   categoria: "bebida",  precio: 18.5,  stock: 14, icono: "images/te.jpg" };
-const agua      = { id: 20, nombre: "agua pura",   categoria: "bebida",  precio: 10.0,  stock: 50, icono: "images/agua.jpg" };
-
-
-// Array que contiene todos los objetos del inventario
-const inventarioProductos = [
-    manzana, pina, pera, melon, zanahoria, tomate, jugo, cocoAgua,
-    platano, uva, sandia, mango, fresa, lechuga, cebolla, pepino, 
-    brocoli, limonada, teHelado, agua
-];
-
-// Valores fijos representados como constantes en MAYÚSCULAS aplicables para las reglas de negocio de la tienda
-const COSTO_ENVIO = 8;
-const MINIMO_ENVIO_GRATIS = 60;
-const MINIMO_CUPON_MITAD = 100;
-
-// Definición de variables "let" que pueden cambiar su contenido. Representan el estado de la aplicación.
-let carrito = [];               // Array de objetos que se van a comprar {id, nombre, precio, icono, cantidad}
-let porcentajeDescuento = 0;    // Numero para los descuentos disponibles: 0, 0.10 o 0.50
-let envioGratisPorCupon = false;// Boolean para la selección de envío gratis o no
-let categoriaActual = "todos";  // String: filtro para desplegar todo el catálogo o solo una categoría
-let temaOscuro = false;         // Boolean: controla la clase del <body>
-let numeroPedido = 1000;        // Number: contador de pedidos confirmados
-let temporizadorMensaje = null; // Guarda el setTimeout activo del mensaje
-
-
-
-/* =========================================================================
-   2. SELECCIÓN DE ELEMENTOS DEL DOM (Elementos que se van a actualizar dinámicamente)
-   ========================================================================= */
+// Reemplazamos panelBoleta por cuerpoHistorial
 const contenedorProductos = document.getElementById("lista-productos");
 const contenedorCarrito   = document.getElementById("items-carrito");
 const contadorCarrito     = document.getElementById("contador-carrito");
@@ -71,621 +17,20 @@ const selectCategoria = document.getElementById("filtro-categoria");
 const formCompra  = document.getElementById("form-compra");
 const inputNombre = document.getElementById("input-nombre");
 const inputCorreo = document.getElementById("input-correo");
-const panelBoleta    = document.getElementById("panel-boleta");
+const cuerpoHistorial = document.getElementById("cuerpo-historial"); // <-- NUEVO
 const avisoConexion  = document.getElementById("aviso-conexion");
 const btnTema        = document.getElementById("btn-tema");
 
+/* ... (Todo tu código del bloque 3, 4, 5, 6 y 7 se mantiene intacto) ... */
 
 
 /* =========================================================================
-   3. FUNCIONES AUXILIARES (se definen para ser reutilizadas en varias partes del código sin duplicar la lógica)
+   8. INICIALIZACIÓN Y EVENTOS DE COMPRA (Actualizado)
    ========================================================================= */
 
-// 3.1. Función flecha: convierte un número en texto de precio.
-// toFixed(2) obliga a mostrar siempre dos decimales.
-const formatearPrecio = (valor) => {
-    return `$${valor.toFixed(2)}`;
-};
-
-// 3.2. Función declarativa: busca un producto por su id usando un ciclo for.
-//Esta función devuelve el objeto completo del producto si lo encuentra, o null si no lo encuentra.
-function buscarProductoPorId(idProducto) {
-    /*
-    NOTA IMPORTANTE: el ciclo for es más rápido que find() porque no necesita crear una función anónima ni un objeto intermedio.
-    Sonarqube y otros analizadores de código recomiendan usar for() en lugar de find() cuando se trata de buscar un elemento por su id.
-    SonarQube advierte que se está usando un índice i únicamente para acceder a los elementos del arreglo (inventarioProductos[i]).
-    En JavaScript moderno, esto se considera menos legible que usar estructuras de iteración directa.
-    */
-    /*
-    //Código original con ciclo for:
-    for (let i = 0; i < inventarioProductos.length; i++) {
-        if (inventarioProductos[i].id === idProducto) {
-            return inventarioProductos[i]; // return corta el ciclo y sale
-        }
-    }
-    return null; // null = valor vacío intencional
-    */
-    /*
-    Opciones para solucionar la advertencia de SonarQube:
-    1. Usar un ciclo for...of en lugar de un índice así:
-    for (const producto of inventarioProductos) {
-        if (producto.id === idProducto) {
-            return producto;
-        }
-    }
-    2. Usar el método find() de los arrays, que es más legible y moderno:
-    return inventarioProductos.find(producto => producto.id === idProducto) || null;    
-    */
-    //Solución aplicada: se uso find() para mayor legibilidad y mantenibilidad de la funcionalidad.
-   return inventarioProductos.find(producto => producto.id === idProducto) || null;
-}
-
-
-// 3.3. Busca una línea dentro del carrito
-// Esta función es similar a la anterior, pero busca en el carrito en lugar del inventario. Devuelve null si no encuentra el producto.
-function buscarItemEnCarrito(idProducto) {
-    /*
-    NOTA IMPORTANTE: se preseta la misma advertencia de SonarQube que en la función anterior, pero en este caso no hay un
-    método find() equivalente porque el carrito es un array de objetos que no tiene un método específico para buscar por id.
-    */
-    /* Código original con ciclo for:
-    for (let i = 0; i < carrito.length; i++) {
-        if (carrito[i].id === idProducto) {
-            return carrito[i];
-        }
-    }
-    return null;
-    */
-    //Solución aplicada: se uso find() para mayor legibilidad y mantenibilidad de la funcionalidad.
-    return carrito.find(item => item.id === idProducto) || null;
-}
-
-// 3.4. Devuelve un carrito NUEVO sin el producto indicado.
-// Así evitamos borrar elementos "a la fuerza": construimos otra lista.
-const carritoSinProducto = (idProducto) => {
-    const nuevoCarrito = [];
-    carrito.forEach((item) => {
-        if (item.id !== idProducto) {
-            nuevoCarrito.push(item);
-        }
-    });
-    return nuevoCarrito;
-};
-
-// 3.5. Cuenta cuántas unidades hay en total en el carrito
-// Esta función recorre el carrito y suma la cantidad de cada línea. Devuelve un número entero.
-const contarUnidades = () => {
-    let unidades = 0;
-    carrito.forEach((item) => {
-        unidades = unidades + item.cantidad;
-    });
-    return unidades;
-};
-
-// 3.6. Función flecha: calcula subtotal, descuento, envío y total.
-// Esta función devuelve un objeto con cuatro propiedades: subtotal, descuento, envio y total.
-const calcularTotales = () => {
-    let subtotal = 0;
-
-    // forEach: recorre el carrito ejecutando una acción por cada elemento
-    carrito.forEach((item) => {
-        subtotal = subtotal + (item.precio * item.cantidad);
-    });
-
-    const descuento = subtotal * porcentajeDescuento;
-
-    // Condicional múltiple: el envío depende de tres reglas distintas
-    /*
-    NOTA IMPORTANTE: se preseta la misma advertencia de SonarQube que en la función anterior, pero en este caso no hay un
-    método find() equivalente porque el carrito es un array de objetos que no tiene un método específico para buscar por id.
-    */
-    /*
-    Código original con condicional múltiple:
-    let envio = COSTO_ENVIO;
-    if (carrito.length === 0) {
-        envio = 0;
-    } else if (envioGratisPorCupon === true) {
-        envio = 0;
-    } else if (subtotal - descuento >= MINIMO_ENVIO_GRATIS) {
-        envio = 0;
-    }
-    */
-    //Solución aplicada: se uso operador ternario para mayor legibilidad y mantenibilidad de la funcionalidad.
-    // El envío es gratis si el carrito está vacío, si se aplicó un cupón de envío gratis, o si el subtotal menos el descuento supera el mínimo para envío gratis.
-    const envio = (carrito.length === 0 || envioGratisPorCupon === true || subtotal - descuento >= MINIMO_ENVIO_GRATIS) ? 0 : COSTO_ENVIO;
-
-    const total = subtotal - descuento + envio;
-
-    return {
-        subtotal: subtotal,
-        descuento: descuento,
-        envio: envio,
-        total: total
-    };
-};
-
-
-
-// 3.7. Función declarativa: escribe los totales en el panel derecho.
-//Esta función se llama cada vez que se actualiza el carrito o se aplica un cupón. Actualiza el subtotal, el descuento, el costo del envío y el total a pagar en la interfaz de usuario. También actualiza el contador de unidades en el carrito. Si hay un descuento aplicado, muestra la línea de descuento; si no, la oculta.
-// El costo del envío se muestra como "Gratis" si es cero, o con el precio correspondiente si no lo es.
-function renderizarResumen() {
-    const totales = calcularTotales();
-
-    textoSubtotal.textContent = formatearPrecio(totales.subtotal);
-    textoTotal.textContent = formatearPrecio(totales.total);
-    contadorCarrito.textContent = contarUnidades();
-
-    // Condicional doble: la línea de descuento solo aparece si hay descuento
-    if (totales.descuento > 0) {
-        textoDescuento.textContent = `- ${formatearPrecio(totales.descuento)}`;
-        lineaDescuento.classList.remove("oculto");
-    } else {
-        lineaDescuento.classList.add("oculto");
-    }
-
-    // Operador ternario para el texto del envío
-    textoEnvio.textContent = (totales.envio === 0) ? "Gratis" : formatearPrecio(totales.envio);
-}
-
-
-
-/* =========================================================================
-   4. DIBUJAR EL CATÁLOGO (permite filtrar por categoría y actualizar el stock en tiempo real)
-   ========================================================================= */
-//4.1. Función declarativa: dibuja el catálogo de productos en la zona central.
-function renderizarProductos() {
-    // Ciclo WHILE: mientras el contenedor tenga hijos, los va eliminando.
-    // Es la forma de "limpiar" la zona antes de volver a dibujarla.
-
-    /*
-    NOTA IMPORTANTE: se preseta la misma advertencia de SonarQube que en la función anterior, pero en este caso no hay un
-    método find() equivalente porque el carrito es un array de objetos que no tiene un método específico para buscar por id.
-    */
-    /* Código original con ciclo while:
-    while (contenedorProductos.firstChild) {
-        contenedorProductos.removeChild(contenedorProductos.firstChild);
-    }
-
-    // Ciclo FOR: recorre el inventario producto por producto
-    for (let i = 0; i < inventarioProductos.length; i++) {
-        const producto = inventarioProductos[i];
-
-        // Filtro por categoría: "todos" muestra todo; si no, comparamos
-        const coincideFiltro = (categoriaActual === "todos" || producto.categoria === categoriaActual);
-
-        if (coincideFiltro) {
-
-            // Creamos la etiqueta desde cero y le ponemos su clase CSS
-            const tarjeta = document.createElement("article");
-            tarjeta.classList.add("tarjeta");
-
-            // Condicional múltiple: tres estados posibles de inventario
-            let textoStock = "";
-            if (producto.stock === 0) {
-                textoStock = "Agotado";
-                tarjeta.classList.add("agotada");
-            } else if (producto.stock <= 3) {
-                textoStock = `¡Últimas ${producto.stock} unidades!`;
-                tarjeta.classList.add("poco-stock");
-            } else {
-                textoStock = `Disponibles: ${producto.stock}`;
-            }
-
-            // NUEVO EN LA V2: avisamos cuántas unidades ya lleva el usuario
-            const itemEnCarrito = buscarItemEnCarrito(producto.id);
-            const textoEnCarrito = (itemEnCarrito === null) ? "" : `Ya llevas ${itemEnCarrito.cantidad} en el carrito`;
-
-            // Plantillas literales para armar el HTML interno de la tarjeta
-            tarjeta.innerHTML = 
-            `
-                <span class="icono-producto"><img src="${producto.icono}" alt="${producto.nombre}" style="width: 100%; height: auto;"></span>
-                <h3 class="nombre-producto">${producto.nombre}</h3>
-                <p class="etiqueta-categoria">${producto.categoria}</p>
-                <p class="precio-producto">${formatearPrecio(producto.precio)}</p>
-                <p class="estado-stock">${textoStock}</p>
-                <p class="mini-dato">${textoEnCarrito}</p>
-            `;
-
-            // El botón se crea aparte para poder escucharlo con addEventListener
-            const botonComprar = document.createElement("button");
-            botonComprar.classList.add("boton");
-            botonComprar.classList.add("boton-bloque");
-
-            // Operador ternario para decidir el texto del botón
-            //botonComprar.textContent = (producto.stock === 0) ? "Sin existencias" : "Comprar";
-
-            if (producto.stock === 0) {
-                botonComprar.textContent = "Sin existencias";
-                botonComprar.disabled = true;
-            } else {
-                botonComprar.textContent = "Agregar al carrito";
-                botonComprar.addEventListener("click", () => {
-                    agregarAlCarrito(producto.id);
-                });
-            }
-
-            tarjeta.appendChild(botonComprar);
-            contenedorProductos.appendChild(tarjeta);
-        }
-    }
-    */
-    //Solución aplicada: se uso forEach() para mayor legibilidad y mantenibilidad de la funcionalidad.
-    while (contenedorProductos.firstChild) {
-        //Advertencia: Se está usando parentNode.removeChild(childNode), que es la forma antigua de eliminar elementos.
-        //Solución: Se puede usar el método remove() directamente sobre el elemento hijo.
-        //contenedorProductos.removeChild(contenedorProductos.firstChild);
-        contenedorProductos.firstChild.remove();
-    }
-    inventarioProductos.forEach((producto) => {
-        const coincideFiltro = (categoriaActual === "todos" || producto.categoria === categoriaActual);
-        if (coincideFiltro) {
-            const tarjeta = document.createElement("article");
-            tarjeta.classList.add("tarjeta");
-
-            let textoStock = "";
-            if (producto.stock === 0) {
-                textoStock = "Agotado";
-                tarjeta.classList.add("agotada");
-            } else if (producto.stock <= 3) {
-                textoStock = `¡Últimas ${producto.stock} unidades!`;
-                tarjeta.classList.add("poco-stock");
-            } else {
-                textoStock = `Disponibles: ${producto.stock}`;
-            }
-
-            const itemEnCarrito = buscarItemEnCarrito(producto.id);
-            const textoEnCarrito = (itemEnCarrito === null) ? "" : `Ya llevas ${itemEnCarrito.cantidad} en el carrito`;
-
-            // Plantillas literales para armar el HTML interno de la tarjeta
-            tarjeta.innerHTML = 
-            `
-                <span class="icono-producto"><img src="${producto.icono}" alt="${producto.nombre}" style="width: 100%; height: auto;"></span>
-                <h3 class="nombre-producto">${producto.nombre}</h3>
-                <p class="etiqueta-categoria">${producto.categoria}</p>
-                <p class="precio-producto">${formatearPrecio(producto.precio)}</p>
-                <p class="estado-stock">${textoStock}</p>
-                <p class="mini-dato">${textoEnCarrito}</p>
-            `;
-
-            // El botón se crea aparte para poder escucharlo con addEventListener
-            const botonComprar = document.createElement("button");
-            //Advertencia: Se está llamando al método classList.add() varias veces seguidas para el mismo elemento.
-            //La solución: El método classList.add() permite pasar múltiples clases separadas por comas en una sola llamada.
-            //botonComprar.classList.add("boton");
-            //botonComprar.classList.add("boton-bloque");
-            botonComprar.classList.add("boton", "boton-bloque");
-
-            // Operador ternario para decidir el texto del botón
-            //botonComprar.textContent = (producto.stock === 0) ? "Sin existencias" : "Comprar";
-
-            if (producto.stock === 0) {
-                botonComprar.textContent = "Sin existencias";
-                botonComprar.disabled = true;
-            } else {
-                botonComprar.textContent = "Agregar al carrito";
-                botonComprar.addEventListener("click", () => {
-                    agregarAlCarrito(producto.id);
-                });
-            }
-
-            tarjeta.appendChild(botonComprar);
-            contenedorProductos.appendChild(tarjeta);
-        }
-    });
-}
-
-
-/* =========================================================================
-   5. LÓGICA DE COMPRA (permiten agregar, quitar y cambiar cantidades de productos en el carrito)
-   ========================================================================= */
-
-// 5.1. Agrega una unidad al carrito y la descuenta del inventario
-// Esta función se llama desde el botón "Agregar al carrito" de cada producto. Busca el producto por su id, verifica si hay stock disponible, y si es así, lo agrega al carrito o aumenta la cantidad si ya estaba. Luego actualiza la pantalla y muestra un mensaje de éxito. Si no hay stock, muestra un mensaje de error.
-const agregarAlCarrito = (idProducto) => {
-    const producto = buscarProductoPorId(idProducto);
-
-    if (producto.stock > 0) {
-        const item = buscarItemEnCarrito(idProducto);
-
-        if (item === null) {
-            // Todavía no está en el carrito: creamos su línea
-            carrito.push({
-                id: producto.id,
-                nombre: producto.nombre,
-                precio: producto.precio,
-                icono: producto.icono,
-                cantidad: 1
-            });
-        } else {
-            // Ya estaba: solo sumamos una unidad a esa línea
-            item.cantidad++;
-        }
-
-        producto.stock--;
-        mostrarMensaje(`${producto.nombre} agregado al carrito`, "exito");
-        actualizarPantalla();
-    } else {
-        mostrarMensaje(`No queda inventario de ${producto.nombre}`, "error");
-    }
-};
-
-// 5.2. Suma o resta una unidad de una línea. 'cambio' vale 1 o -1.
-// Esta función se llama desde los botones "+" y "−" de cada línea del carrito. Busca el producto y la línea correspondiente,
-// y según el valor de 'cambio', aumenta o disminuye la cantidad. Si se intenta aumentar más allá del stock disponible,
-// muestra un mensaje de error. Si la cantidad llega a cero, elimina la línea del carrito y devuelve el inventario al producto.
-function cambiarCantidad(idProducto, cambio) {
-    const item = buscarItemEnCarrito(idProducto);
-    const producto = buscarProductoPorId(idProducto);
-
-    if (cambio === 1) {
-        if (producto.stock > 0) {
-            item.cantidad++;
-            producto.stock--;
-        } else {
-            mostrarMensaje(`No hay más unidades de ${producto.nombre}`, "error");
-        }
-    } else {
-        item.cantidad--;
-        producto.stock++; // la unidad regresa al inventario
-
-        // Si la línea llegó a cero, la sacamos del carrito
-        if (item.cantidad === 0) {
-            carrito = carritoSinProducto(idProducto);
-        }
-    }
-
-    actualizarPantalla();
-}
-
-// 5.3. Elimina la línea completa y devuelve todo su inventario
-// Esta función se llama desde el botón "X" de cada línea del carrito. Busca el producto y la línea correspondiente,
-// devuelve todo el stock de esa línea al inventario del producto, elimina la línea del carrito y actualiza la pantalla.
-// Muestra un mensaje de error indicando que se quitó del carrito.
-function quitarDelCarrito(idProducto) {
-    const item = buscarItemEnCarrito(idProducto);
-    const producto = buscarProductoPorId(idProducto);
-
-    producto.stock = producto.stock + item.cantidad;
-    carrito = carritoSinProducto(idProducto);
-
-    mostrarMensaje(`${producto.nombre} se quitó del carrito`, "error");
-    actualizarPantalla();
-}
-
-
-
-/* =========================================================================
-   6. DIBUJAR EL CARRITO Y EL RESUMEN (permiten ver el contenido del carrito y los totales en la interfaz)
-   ========================================================================= */
-
-// 6.1. Dibuja el contenido del carrito en la pantalla
-const renderizarCarrito = function () {
-
-    // Ciclo WHILE para limpiar el panel antes de volver a dibujarlo
-    while (contenedorCarrito.firstChild) {
-        //contenedorCarrito.removeChild(contenedorCarrito.firstChild); //se explica la solución en la línea 315
-        contenedorCarrito.firstChild.remove();
-    }
-
-    if (carrito.length === 0) {
-        const vacio = document.createElement("p");
-        vacio.classList.add("carrito-vacio");
-        vacio.textContent = "Tu carrito está vacío. Agrega productos del catálogo.";
-        contenedorCarrito.appendChild(vacio);
-        return; // salimos: no hay nada más que dibujar
-    }
-
-    carrito.forEach((item) => {
-        const linea = document.createElement("div");
-        linea.classList.add("linea-carrito");
-
-        const info = document.createElement("div");
-        info.innerHTML =
-        `
-            <p class="nombre-linea"> 
-            <img src="images/${item.nombre}.jpg" style="width: 20%; height: 100%;"> ${item.nombre}</p>
-            <p class="detalle-linea">${item.cantidad} x ${formatearPrecio(item.precio)} = ${formatearPrecio(item.precio * item.cantidad)}</p>
-        `;
-
-        const controles = document.createElement("div");
-        controles.classList.add("controles-linea");
-
-        const btnMenos = document.createElement("button");
-        btnMenos.classList.add("boton-mini");
-        btnMenos.textContent = "-";
-        btnMenos.addEventListener("click", () => {
-            cambiarCantidad(item.id, -1);
-        });
-
-        const btnMas = document.createElement("button");
-        btnMas.classList.add("boton-mini");
-        btnMas.textContent = "+";
-        btnMas.addEventListener("click", () => {
-            cambiarCantidad(item.id, 1);
-        });
-
-        const btnQuitar = document.createElement("button");
-        btnQuitar.classList.add("boton-mini", "boton-quitar");
-        //btnQuitar.classList.add("boton-quitar"); //Se explica la solución en la línea 353
-        btnQuitar.textContent = "X";
-        btnQuitar.addEventListener("click", () => {
-            quitarDelCarrito(item.id);
-        });
-
-        controles.appendChild(btnMenos);
-        controles.appendChild(btnMas);
-        controles.appendChild(btnQuitar);
-
-        linea.appendChild(info);
-        linea.appendChild(controles);
-        contenedorCarrito.appendChild(linea);
-    });
-};
-
-/*
-//Se elimina la función renderizarResumen() porque ya no es necesaria, ya que se ha integrado en la función actualizarPantalla()
-// que llama a renderizarProductos(), renderizarCarrito() y renderizarResumen() en ese orden. Esto permite que cada vez que se
-// actualice el carrito o se aplique un cupón, se refresque toda la interfaz de usuario de manera coherente y consistente.
-// Escribe los totales en el panel derecho
-function renderizarResumen() {
-    const totales = calcularTotales();
-
-    textoSubtotal.textContent = formatearPrecio(totales.subtotal);
-    textoTotal.textContent = formatearPrecio(totales.total);
-    contadorCarrito.textContent = contarUnidades();
-
-    // Operador ternario para el texto del envío
-    textoEnvio.textContent = (totales.envio === 0) ? "Gratis" : formatearPrecio(totales.envio);
-}
-*/
-
-// 6.2. Función maestra: refresca las tres zonas de la interfaz
-function actualizarPantalla() {
-    renderizarProductos();
-    renderizarCarrito();
-    renderizarResumen();
-}
-
-
-
-/* =========================================================================
-   7. MENSAJES DEL SISTEMA (permiten informar al usuario sobre acciones realizadas o errores)
-   ========================================================================= */
-
-    //7.1. Función declarativa: muestra un mensaje temporal en la parte superior de la pantalla. El mensaje desaparece automáticamente
-    // después de 3 segundos. El parámetro 'tipo' puede ser "exito", "error" o cualquier otro valor para mostrar un mensaje genérico.
-    function mostrarMensaje(texto, tipo) {
-        mensajeSistema.textContent = texto;
-
-        mensajeSistema.classList.remove("oculto", "mensaje-exito", "mensaje-error");
-        //mensajeSistema.classList.remove("mensaje-exito", "mensaje-error");
-        //mensajeSistema.classList.remove("mensaje-error");
-
-        switch (tipo) {
-            case "exito":
-                mensajeSistema.classList.add("mensaje-exito");
-                break;
-            case "error":
-                mensajeSistema.classList.add("mensaje-error");
-                break;
-            default:
-                mensajeSistema.classList.add("mensaje-exito");
-        }
-
-        clearTimeout(temporizadorMensaje);
-
-        temporizadorMensaje = setTimeout(() => {
-            mensajeSistema.classList.add("oculto");
-        }, 3000);
-}
-
-
-/* =========================================================================
-   8. INICIALIZACIÓN (Función autoejecutable - IIFE)
-   ========================================================================= */
-
-   //8.1. Función autoejecutable: se ejecuta automáticamente al cargar la página. Inicializa la tienda y actualiza la pantalla.
-    (function iniciarTienda() {
-        console.log("Iniciando la tienda...");
-        actualizarPantalla();
-        console.log(`Tienda lista con ${inventarioProductos.length} productos.`);
-    })();
-
-
-    // 8.2. Cupones: función expresiva reutilizada por el clic y por Enter que permite aplicar un cupón de descuento o envío gratis.
-    // Actualiza el resumen y muestra un mensaje según el resultado.
-    const aplicarCupon = function () {
-        const codigo = inputDescuento.value;
-        const totales = calcularTotales();
-
-        if (carrito.length === 0) {
-            mostrarMensaje("Agrega productos antes de usar un cupón", "info");
-            return;
-        }
-
-        // SWITCH: comparamos el texto exacto que escribió el usuario
-        switch (codigo) {
-            case "DESCUENTO10":
-                porcentajeDescuento = 0.10;
-                envioGratisPorCupon = false;
-                mostrarMensaje("Cupón aplicado: 10% de descuento", "exito");
-                break;
-
-            case "MITAD":
-                // Condicional anidado: este cupón exige una compra mínima
-                if (totales.subtotal >= MINIMO_CUPON_MITAD) {
-                    porcentajeDescuento = 0.50;
-                    envioGratisPorCupon = false;
-                    mostrarMensaje("Cupón aplicado: 50% de descuento", "exito");
-                } else {
-                    porcentajeDescuento = 0;
-                    mostrarMensaje(
-                        `El cupón MITAD necesita una compra mínima de ${formatearPrecio(MINIMO_CUPON_MITAD)}`,
-                        "error"
-                    );
-                }
-                break;
-
-            case "ENVIOGRATIS":
-                porcentajeDescuento = 0;
-                envioGratisPorCupon = true;
-                mostrarMensaje("Cupón aplicado: envío gratis", "exito");
-                break;
-
-            default:
-                // Cualquier otro texto cae aquí y se reinician los beneficios
-                porcentajeDescuento = 0;
-                envioGratisPorCupon = false;
-                mostrarMensaje("Ese código no existe o ya venció", "error");
-        }
-        renderizarResumen();
-    };
-
-    // 8.3. Evento de ratón + función flecha que permite aplicar el cupón al hacer clic en el botón correspondiente.
-    btnDescuento.addEventListener("click", () => {
-        aplicarCupon();
-    });
-
-    // 8.4. Evento de teclado + función declarativa que permite aplicar el cupón al presionar la tecla Enter en el campo de texto.
-    // Función declarativa que recibe el Objeto Evento (e)
-    function detectarEnterCupon(e) {
-        if (e.key === "Enter") {
-            aplicarCupon();
-        }
-    }
-    inputDescuento.addEventListener("keydown", detectarEnterCupon);
-
-
-    // 8.5. Cambio de categoría (evento change de un selector) que permite filtrar los productos por categoría.
-    // Actualiza la variable global 'categoriaActual' y vuelve a dibujar el catálogo.
-    selectCategoria.addEventListener("change", () => {
-        categoriaActual = selectCategoria.value; // .value trae la opción elegida
-        renderizarProductos();
-    });
-
-
-    // 8.6. Cambio de tema a tema oscuro o claro (evento click de un botón) que permite alternar entre los dos estilos.
-    // Actualiza la variable global 'temaOscuro' y cambia la clase del <body>.
-    btnTema.addEventListener("click", () => {
-        // Condicional doble sobre un Boolean
-        if (temaOscuro === false) {
-            document.body.classList.add("tema-oscuro");
-            btnTema.textContent = "Modo claro";
-            temaOscuro = true;
-        } else {
-            document.body.classList.remove("tema-oscuro");
-            btnTema.textContent = "Modo oscuro";
-            temaOscuro = false;
-        }
-    });
-
-
-    // 8.7. Formulario de compra: función expresiva que permite confirmar la compra y generar la boleta.
-    // Valida que el carrito no esté vacío y que el nombre tenga al menos 3 letras.
-    // Reinicia el estado de la compra después de confirmar.
+    // 8.7. Formulario de compra
     const manejarCompra = function (evento) {
-        // preventDefault() cancela la recarga automática de la página
+        // REQUERIMIENTO 2: Interceptación del formulario (se evita recarga de página)
         evento.preventDefault();
 
         if (carrito.length === 0) {
@@ -696,7 +41,6 @@ function actualizarPantalla() {
         const nombreCliente = inputNombre.value;
         const correoCliente = inputCorreo.value;
 
-        // Validación propia además de la que ya hace el HTML con 'required'
         if (nombreCliente.length < 3) {
             mostrarMensaje("Escribe tu nombre completo (mínimo 3 letras)", "error");
             return;
@@ -705,9 +49,10 @@ function actualizarPantalla() {
         const totales = calcularTotales();
         numeroPedido++;
 
-        dibujarBoleta(nombreCliente, correoCliente, totales);
+        // Invocamos la nueva lógica de tabla
+        agregarRegistroHistorial(numeroPedido, nombreCliente, correoCliente, totales);
 
-        // Reiniciamos el estado de la compra (el stock vendido NO se devuelve)
+        // Reiniciamos el estado de la compra
         carrito = [];
         porcentajeDescuento = 0;
         envioGratisPorCupon = false;
@@ -721,66 +66,37 @@ function actualizarPantalla() {
     formCompra.addEventListener("submit", manejarCompra);
 
     
-    // 8.8. Función declarativa que permite dibujar la boleta de compra en el panel derecho. Muestra el número de pedido,
-    // el nombre y correo del cliente, los productos comprados, el ahorro por cupón (si lo hubo), el costo del envío y el
-    // total pagado.
-    function dibujarBoleta(nombreCliente, correoCliente, totales) {
+    // REQUERIMIENTO 4 Y 5: Generación e inyección de registros (Nodos DOM)
+    // Se fabrica la fila dinámicamente y se anexa al final sin borrar las anteriores
+    function agregarRegistroHistorial(pedido, nombreCliente, correoCliente, totales) {
+        // Fabricación de nodos DOM
+        const fila = document.createElement("tr");
 
-        // Limpiamos la boleta anterior
-        while (panelBoleta.firstChild) {
-            //panelBoleta.removeChild(panelBoleta.firstChild);
-            panelBoleta.firstChild.remove();
-        }
+        const celdaPedido = document.createElement("td");
+        celdaPedido.textContent = `#${pedido}`;
+        fila.appendChild(celdaPedido);
 
-        const titulo = document.createElement("h3");
-        titulo.textContent = `Pedido #${numeroPedido} confirmado`;
-        panelBoleta.appendChild(titulo);
+        const celdaCliente = document.createElement("td");
+        celdaCliente.textContent = `${nombreCliente} (${correoCliente})`;
+        fila.appendChild(celdaCliente);
 
-        const datos = document.createElement("p");
-        datos.textContent = `${nombreCliente} · ${correoCliente}`;
-        panelBoleta.appendChild(datos);
+        const celdaTotal = document.createElement("td");
+        celdaTotal.textContent = formatearPrecio(totales.total);
+        // Resaltamos visualmente el total
+        celdaTotal.style.fontWeight = "bold"; 
+        celdaTotal.style.color = "var(--color-primario)";
+        fila.appendChild(celdaTotal);
 
-        // Ciclo DO-WHILE: se ejecuta al menos una vez y aquí eso es correcto,
-        // porque solo llegamos a esta función cuando el carrito tiene productos.
-        let i = 0;
-        do {
-            const item = carrito[i];
-            const linea = document.createElement("p");
-            linea.textContent = `${item.cantidad} x ${item.nombre} = ${formatearPrecio(item.precio * item.cantidad)}`;
-            panelBoleta.appendChild(linea);
-            i++;
-        } while (i < carrito.length);
-
-        // Condicional simple: la línea de ahorro solo aparece si hubo descuento
-        if (totales.descuento > 0) {
-            const ahorro = document.createElement("p");
-            ahorro.textContent = `Ahorraste ${formatearPrecio(totales.descuento)} con tu cupón`;
-            panelBoleta.appendChild(ahorro);
-        }
-
-        const envio = document.createElement("p");
-        envio.textContent = (totales.envio === 0)
-            ? "Envío: gratis"
-            : `Envío: ${formatearPrecio(totales.envio)}`;
-        panelBoleta.appendChild(envio);
-
-        const total = document.createElement("p");
-        total.classList.add("boleta-total");
-        total.textContent = `Total pagado: ${formatearPrecio(totales.total)}`;
-        panelBoleta.appendChild(total);
-
-        panelBoleta.classList.remove("oculto");
+        // Inyección y persistencia
+        cuerpoHistorial.appendChild(fila);
     }
 
 
-    //8.9. Función autoejecutable: se ejecuta automáticamente al cargar la página. Inicializa la tienda y actualiza la pantalla.
+    // 8.9. Función autoejecutable
     (function iniciarTienda() {
         console.log("Iniciando la tienda...");
-
-        // Primer dibujado de la interfaz
         actualizarPantalla();
 
-        // Eventos del navegador: avisar cuando se cae o vuelve la conexión
         window.addEventListener("offline", () => {
             avisoConexion.classList.remove("oculto");
         });
@@ -790,7 +106,5 @@ function actualizarPantalla() {
             mostrarMensaje("Conexión restaurada", "exito");
         });
 
-        console.log(`Tienda lista con ${inventarioProductos.length} productos.`);
+        // NOTA: Asegúrate de que la variable "inventarioProductos" esté declarada globalmente arriba como en tu código original.
     })();
-
-

@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda de productos | Proyecto integrador</title>
-
-    <!-- Hoja de estilos externa -->
     <link rel="stylesheet" href="style.css">
-
     <script src="script.js" defer></script>
 </head>
 
 <body>
 
-    <!-- ==================================================================
-         CABECERA
-         ================================================================== -->
+    <!-- REQUERIMIENTO 1: Integración bidireccional -->
+    <nav class="navegacion-principal">
+        <a href="hoja_de_vida.html" class="enlace-nav">← Volver a mi Hoja de Vida</a>
+    </nav>
+
+    <!-- CABECERA -->
     <header class="cabecera">
         <div class="zona-marca">
             <span class="logo">
@@ -35,22 +35,16 @@
         </div>
     </header>
 
-    <!-- Aviso de conexión: JavaScript lo muestra con los eventos online/offline -->
     <p id="aviso-conexion" class="aviso-conexion oculto">
         Sin conexión a internet. Puedes seguir navegando, pero no podrás confirmar el pedido.
     </p>
 
-    <!-- ==================================================================
-         CONTENIDO PRINCIPAL: catálogo (izquierda) + carrito (derecha)
-         ================================================================== -->
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="contenedor-principal">
 
-        <!-- ---------- COLUMNA IZQUIERDA: CATÁLOGO ---------- -->
         <section class="columna-catalogo">
-
             <div class="barra-filtros">
                 <h2>Catálogo</h2>
-
                 <div class="grupo-filtro">
                     <label for="filtro-categoria">Filtrar por categoría</label>
                     <select id="filtro-categoria">
@@ -61,20 +55,13 @@
                     </select>
                 </div>
             </div>
-
-            <!-- Este contenedor llega VACÍO desde el HTML.
-                 JavaScript crea y agrega aquí cada tarjeta de producto. -->
             <div id="lista-productos" class="grid-productos"></div>
         </section>
 
-        <!-- ---------- COLUMNA DERECHA: CARRITO ---------- -->
         <aside class="panel-carrito">
             <h2>Tu carrito</h2>
-
-            <!-- Las líneas del carrito también se generan desde JavaScript -->
             <div id="items-carrito" class="lista-carrito"></div>
 
-            <!-- Zona de cupones -->
             <div class="zona-descuento">
                 <label for="input-descuento">¿Tienes un cupón?</label>
                 <div class="fila-descuento">
@@ -84,7 +71,6 @@
                 <p class="ayuda">Prueba con DESCUENTO10, MITAD o ENVIOGRATIS.</p>
             </div>
 
-            <!-- Resumen de la compra -->
             <div class="resumen">
                 <p class="linea-resumen">
                     <span>Subtotal</span>
@@ -104,7 +90,7 @@
                 </p>
             </div>
 
-            <!-- Formulario de compra: al enviarlo evitamos la recarga con preventDefault() -->
+            <!-- REQUERIMIENTO 2: El evento form bloquea el submit por defecto en JS -->
             <form id="form-compra" class="form-compra">
                 <h3>Finalizar compra</h3>
                 <label for="input-nombre" style="font-size: 15px; display: block; margin: 5px;">Nombre completo:
@@ -117,14 +103,27 @@
                 <button type="submit" class="boton boton-bloque">Confirmar pedido</button>
             </form>
 
-            <!-- Mensajes del sistema (éxito / error / información) -->
             <p id="mensaje-sistema" class="mensaje oculto"></p>
-
-            <!-- Comprobante del pedido: se llena desde JavaScript -->
-            <div id="panel-boleta" class="boleta oculto"></div>
         </aside>
 
     </main>
+
+    <!-- REQUERIMIENTO 3: Estructuración semántica de datos al final de la página -->
+    <section class="contenedor-historial">
+        <h2>Historial de Transacciones de la Sesión</h2>
+        <table class="tabla-historial">
+            <thead>
+                <tr>
+                    <th>Pedido</th>
+                    <th>Cliente</th>
+                    <th>Total Pagado</th>
+                </tr>
+            </thead>
+            <tbody id="cuerpo-historial">
+                <!-- Las filas dinámicas se insertan aquí -->
+            </tbody>
+        </table>
+    </section>
 
     <footer class="pie">
         <p>Ejemplo académico para el Laboratorio de Ingeniería de Software 3</p>
