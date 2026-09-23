@@ -1,6 +1,6 @@
-/* =========================================================================
-   1. VARIABLES Y TIPOS DE DATOS 
-   ========================================================================= */
+/*=========================================================================
+1. VARIABLES Y TIPOS DE DATOS 
+========================================================================= */
 const manzana   = { id: 1, nombre: "manzana", categoria: "fruta",   precio: 1000,  stock: 8,  icono: "images/manzana.jpg" };
 const pina      = { id: 2, nombre: "pina",        categoria: "fruta",   precio: 2000, stock: 5,  icono: "images/pina.jpg" };
 const pera      = { id: 3, nombre: "pera",        categoria: "fruta",   precio: 1200,  stock: 12, icono: "images/pera.jpg" };
@@ -27,9 +27,9 @@ let temaOscuro = false;
 let numeroPedido = 1000;        
 let temporizadorMensaje = null; 
 
-/* =========================================================================
-   2. SELECCIÓN DE ELEMENTOS DEL DOM
-   ========================================================================= */
+/*=========================================================================
+2. SELECCIÓN DE ELEMENTOS DEL DOM
+========================================================================= */
 const contenedorProductos = document.getElementById("lista-productos");
 const contenedorCarrito   = document.getElementById("items-carrito");
 const contadorCarrito     = document.getElementById("contador-carrito");
@@ -49,9 +49,9 @@ const cuerpoHistorial = document.getElementById("cuerpo-historial"); // NODO DEL
 const avisoConexion  = document.getElementById("aviso-conexion");
 const btnTema        = document.getElementById("btn-tema");
 
-/* =========================================================================
-   3. FUNCIONES AUXILIARES
-   ========================================================================= */
+/*=========================================================================
+3. FUNCIONES AUXILIARES
+========================================================================= */
 const formatearPrecio = (valor) => `$${valor.toFixed(2)}`;
 
 function buscarProductoPorId(idProducto) {
@@ -95,9 +95,9 @@ function renderizarResumen() {
     textoEnvio.textContent = (totales.envio === 0) ? "Gratis" : formatearPrecio(totales.envio);
 }
 
-/* =========================================================================
-   4. DIBUJAR EL CATÁLOGO (Imágenes y Botones Interactivos)
-   ========================================================================= */
+/*=========================================================================
+4. DIBUJAR EL CATÁLOGO (Imágenes y Botones Interactivos)
+========================================================================= */
 function renderizarProductos() {
     contenedorProductos.innerHTML = ""; 
 
@@ -149,9 +149,9 @@ function renderizarProductos() {
     });
 }
 
-/* =========================================================================
-   5. LÓGICA DE COMPRA
-   ========================================================================= */
+/*=========================================================================
+5. LÓGICA DE COMPRA
+========================================================================= */
 const agregarAlCarrito = (idProducto) => {
     const producto = buscarProductoPorId(idProducto);
 
@@ -206,9 +206,9 @@ function quitarDelCarrito(idProducto) {
     actualizarPantalla();
 }
 
-/* =========================================================================
+/*=========================================================================
    6. DIBUJAR EL CARRITO Y ACTUALIZAR
-   ========================================================================= */
+========================================================================= */
 const renderizarCarrito = function () {
     contenedorCarrito.innerHTML = ""; 
 
@@ -264,9 +264,9 @@ function actualizarPantalla() {
     renderizarResumen();
 }
 
-/* =========================================================================
-   7. MENSAJES DEL SISTEMA
-   ========================================================================= */
+/*=========================================================================
+7. MENSAJES DEL SISTEMA
+========================================================================= */
 function mostrarMensaje(texto, tipo) {
     mensajeSistema.textContent = texto;
     mensajeSistema.classList.remove("oculto", "mensaje-exito", "mensaje-error");
@@ -280,9 +280,9 @@ function mostrarMensaje(texto, tipo) {
     }, 3000);
 }
 
-/* =========================================================================
-   8. EVENTOS Y TABLA DE HISTORIAL REQUERIMIENTO 4 Y 5
-   ========================================================================= */
+/*=========================================================================
+8. EVENTOS Y TABLA DE HISTORIAL REQUERIMIENTO 4 Y 5
+========================================================================= */
 const aplicarCupon = function () {
     const codigo = inputDescuento.value.toUpperCase();
     const totales = calcularTotales();
